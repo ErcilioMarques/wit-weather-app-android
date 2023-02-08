@@ -1,19 +1,24 @@
 package com.example.witweatherapp.repository
 
+import com.example.witweatherapp.BuildConfig
+import com.example.witweatherapp.BuildConfig.APPLICATION_ID
+import com.example.witweatherapp.BuildConfig.OPEN_WEATHER_API_ID
 import com.example.witweatherapp.models.CitiesWeather
 import com.example.witweatherapp.models.CityWeather
 import com.example.witweatherapp.models.forecast.CityWeatherForecast
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiInterface {
-    @GET("group?id=2267057,3117735,2988507,2950159,2618425,3169070,2643743,2964574,3067696,2761369&units=metric&appid=df3f16bb7f7a39bfaaf78f6d0fd50685")
-    fun getCitiesWeatherData(): Call<CitiesWeather>
+    @GET("group")
+    fun getCitiesWeatherData(@Query("id") id: String,@Query("units") units: String="metric",@Query("appid") appid: String= OPEN_WEATHER_API_ID): Call<CitiesWeather>
 
-    @GET("weather?lat=38.736946&lon=-9.142685&units=metric&appid=df3f16bb7f7a39bfaaf78f6d0fd50685")
-    fun getMyCityWeatherData(): Call<CityWeather>
+    @GET("weather")
+    fun getMyCityWeatherData(@Query("lat") lat: String,@Query("lon") lon: String,@Query("units") units: String="metric",@Query("appid") appid: String= OPEN_WEATHER_API_ID): Call<CityWeather>
 
-    @GET("forecast?lat=38.736946&lon=-9.142685&units=metric&appid=df3f16bb7f7a39bfaaf78f6d0fd50685")
-    fun getMyCityWeatherDataForecast(): Call<CityWeatherForecast>
+    @GET("forecast")
+    fun getMyCityWeatherDataForecast(@Query("lat") lat: String,@Query("lon") lon: String,@Query("units") units: String="metric",@Query("appid") appid: String= OPEN_WEATHER_API_ID): Call<CityWeatherForecast>
 
 }

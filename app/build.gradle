@@ -15,12 +15,20 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+
+        debug {
+        buildConfigField "String", "BASE_API_URL", "\"https://api.openweathermap.org/data/2.5/\""
+            buildConfigField "String", "OPEN_WEATHER_API_ID", "\"df3f16bb7f7a39bfaaf78f6d0fd50685\""
+
+        }
         release {
+            buildConfigField "String", "BASE_API_URL", "\"https://api.openweathermap.org/data/2.5/\""
+            buildConfigField "String", "OPEN_WEATHER_API_ID", "\"df3f16bb7f7a39bfaaf78f6d0fd50685\""
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -39,6 +47,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

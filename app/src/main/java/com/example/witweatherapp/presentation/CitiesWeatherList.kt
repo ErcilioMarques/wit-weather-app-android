@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.ProgressBar
+import com.example.witweatherapp.BuildConfig.BASE_API_URL
 import com.example.witweatherapp.CityWeatherDetailsActivity
 import com.example.witweatherapp.R
 import com.example.witweatherapp.models.CitiesWeather
@@ -26,7 +27,6 @@ import kotlinx.android.synthetic.main.fragment_cities_weather_list.view.*
 import kotlinx.android.synthetic.main.fragment_home_weather.view.*
 
 
-const val BASE_URL ="https://api.openweathermap.org/data/2.5/"
 
 
 /**
@@ -76,11 +76,12 @@ class CitiesWeatherList : Fragment() {
     private fun getCitiesWeatherData(context: Context) {
         val retorfitBuilder  = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(BASE_URL)
+            .baseUrl(BASE_API_URL)
             .build()
             .create(ApiInterface::class.java)
 
-        val retrofitData = retorfitBuilder.getCitiesWeatherData()
+        val countriesIds = "2267057,3117735,2988507,2950159,2618425,3169070,2643743,2964574,3067696,2761369"
+        val retrofitData = retorfitBuilder.getCitiesWeatherData(countriesIds)
 
         retrofitData.enqueue(object : Callback<CitiesWeather?> {
             override fun onResponse(
