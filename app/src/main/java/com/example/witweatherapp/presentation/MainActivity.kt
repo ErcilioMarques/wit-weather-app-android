@@ -1,11 +1,9 @@
-package com.example.witweatherapp
+package com.example.witweatherapp.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.Fragment
-import com.example.witweatherapp.presentation.CitiesWeatherList
-import com.example.witweatherapp.presentation.HomeWeather
+import com.example.witweatherapp.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {

@@ -27,6 +27,8 @@ import com.example.witweatherapp.models.forecast.CityWeatherForecast
 import com.example.witweatherapp.repository.ApiInterface
 import com.example.witweatherapp.utils.CitiesListViewAdapter
 import com.example.witweatherapp.utils.CitiyForecastWeatherListViewAdapter
+import com.example.witweatherapp.utils.RetrofitBuilder
+import com.example.witweatherapp.utils.RetrofitBuilder.Companion.weatherApi
 import com.example.witweatherapp.utils.WeatherIconsHelper
 import com.google.android.gms.location.*
 import retrofit2.Call
@@ -112,13 +114,7 @@ class HomeWeather : Fragment() {
     }
 
     private fun getMyCityWeatherData(context: Context) {
-        val retorfitBuilder  = Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(BASE_API_URL)
-            .build()
-            .create(ApiInterface::class.java)
-
-        val retrofitData = retorfitBuilder.getMyCityWeatherData(currentLocation.latitude.toString(), currentLocation.longitude.toString())
+        val retrofitData = weatherApi().getMyCityWeatherData(currentLocation.latitude.toString(), currentLocation.longitude.toString())
 
         retrofitData.enqueue(object : Callback<CityWeather?> {
             @RequiresApi(Build.VERSION_CODES.O)
@@ -137,13 +133,8 @@ class HomeWeather : Fragment() {
     }
 
     private fun getMyCityWeatherForecastData(context: Context) {
-        val retorfitBuilder  = Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(BASE_API_URL)
-            .build()
-            .create(ApiInterface::class.java)
 
-        val retrofitData = retorfitBuilder.getMyCityWeatherDataForecast(currentLocation.latitude.toString(), currentLocation.longitude.toString())
+        val retrofitData = weatherApi().getMyCityWeatherDataForecast(currentLocation.latitude.toString(), currentLocation.longitude.toString())
 
         retrofitData.enqueue(object : Callback<CityWeatherForecast?> {
             override fun onResponse(

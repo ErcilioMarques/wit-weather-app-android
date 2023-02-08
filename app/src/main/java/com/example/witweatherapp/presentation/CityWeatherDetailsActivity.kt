@@ -1,25 +1,25 @@
-package com.example.witweatherapp
+package com.example.witweatherapp.presentation
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.location.Location
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.witweatherapp.BuildConfig
+import com.example.witweatherapp.R
 import com.example.witweatherapp.models.CityWeather
 import com.example.witweatherapp.models.forecast.CityWeatherForecast
 import com.example.witweatherapp.repository.ApiInterface
 import com.example.witweatherapp.utils.CitiyForecastWeatherListViewAdapter
+import com.example.witweatherapp.utils.RetrofitBuilder
+import com.example.witweatherapp.utils.RetrofitBuilder.Companion.weatherApi
 import com.example.witweatherapp.utils.WeatherIconsHelper
 import com.google.android.gms.location.FusedLocationProviderClient
 import kotlinx.android.synthetic.main.activity_city_weather_details.*
@@ -85,13 +85,8 @@ class CityWeatherDetailsActivity : AppCompatActivity() {
     }
 
     private fun getMyCityWeatherData(context: Context) {
-        val retorfitBuilder  = Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(BuildConfig.BASE_API_URL)
-            .build()
-            .create(ApiInterface::class.java)
 
-        val retrofitData = retorfitBuilder.getMyCityWeatherData(lat, lon)
+        val retrofitData = weatherApi().getMyCityWeatherData(lat, lon)
 
         retrofitData.enqueue(object : Callback<CityWeather?> {
             @RequiresApi(Build.VERSION_CODES.O)
@@ -110,13 +105,8 @@ class CityWeatherDetailsActivity : AppCompatActivity() {
     }
 
     private fun getMyCityWeatherForecastData(context: Context) {
-        val retorfitBuilder  = Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(BuildConfig.BASE_API_URL)
-            .build()
-            .create(ApiInterface::class.java)
 
-        val retrofitData = retorfitBuilder.getMyCityWeatherDataForecast(lat, lon)
+        val retrofitData = weatherApi().getMyCityWeatherDataForecast(lat, lon)
 
         retrofitData.enqueue(object : Callback<CityWeatherForecast?> {
             override fun onResponse(
@@ -128,7 +118,8 @@ class CityWeatherDetailsActivity : AppCompatActivity() {
                 weather_details_myCityWeatherForecast =responseBody
                 cityWeatherForecastRc.layoutManager = LinearLayoutManager(context,
                     LinearLayoutManager.HORIZONTAL,false)
-                cityWeatherForecastRc.adapter =  CitiyForecastWeatherListViewAdapter(context,R.layout.city_weather_forecast_list_item,weather_details_myCityWeatherForecast.list)
+                cityWeatherForecastRc.adapter =  CitiyForecastWeatherListViewAdapter(context,
+                    R.layout.city_weather_forecast_list_item,weather_details_myCityWeatherForecast.list)
                 loader.visibility = View.GONE
                 mainContainer.visibility =View.VISIBLE
             }

@@ -1,6 +1,6 @@
 package com.example.witweatherapp.models.forecast
 
-data class Wind(
+data class WindForecast(
     val deg: Int,
     val gust: Double,
     val speed: Double

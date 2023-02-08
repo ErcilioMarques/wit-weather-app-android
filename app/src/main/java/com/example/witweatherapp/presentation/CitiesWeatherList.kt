@@ -12,12 +12,13 @@ import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.ProgressBar
 import com.example.witweatherapp.BuildConfig.BASE_API_URL
-import com.example.witweatherapp.CityWeatherDetailsActivity
 import com.example.witweatherapp.R
 import com.example.witweatherapp.models.CitiesWeather
 import com.example.witweatherapp.models.CityWeather
 import com.example.witweatherapp.repository.ApiInterface
 import com.example.witweatherapp.utils.CitiesListViewAdapter
+import com.example.witweatherapp.utils.RetrofitBuilder.Companion.retrofitBuilder
+import com.example.witweatherapp.utils.RetrofitBuilder.Companion.weatherApi
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -76,14 +77,11 @@ class CitiesWeatherList : Fragment() {
     }
 
     private fun getCitiesWeatherData(context: Context) {
-        val retorfitBuilder  = Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(BASE_API_URL)
-            .build()
-            .create(ApiInterface::class.java)
 
-        val countriesIds = "2267057,3117735,2988507,2950159,2618425,3169070,2643743,2964574,3067696,2761369"
-        val retrofitData = retorfitBuilder.getCitiesWeatherData(countriesIds)
+
+        val citiesIds = "2267057,3117735,2988507,2950159,2618425,3169070,2643743,2964574,3067696,2761369"
+        val retrofitData = weatherApi().getCitiesWeatherData(citiesIds)
+
 
         retrofitData.enqueue(object : Callback<CitiesWeather?> {
             override fun onResponse(
