@@ -119,7 +119,6 @@ class HomeWeather : Fragment() {
         retrofitData.enqueue(object : Callback<CityWeather?> {
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onResponse(call: Call<CityWeather?>, response: Response<CityWeather?>) {
-                Log.i("FecthingDataSucess", response.body().toString())
                 val responseBody = response.body()!!
                 myCityWeather =responseBody
 
@@ -127,7 +126,7 @@ class HomeWeather : Fragment() {
             }
 
             override fun onFailure(call: Call<CityWeather?>, t: Throwable) {
-                Log.i("FecthingDataFailure", "Failed")
+                Toast.makeText(context, "Something went wrong, please try again!",Toast.LENGTH_LONG).show()
             }
         })
     }
@@ -141,7 +140,6 @@ class HomeWeather : Fragment() {
                 call: Call<CityWeatherForecast?>,
                 response: Response<CityWeatherForecast?>,
             ) {
-                Log.i("FecthingForecastDataSucess", response.body().toString())
                 val responseBody = response.body()!!
                 myCityWeatherForecast =responseBody
                 cityWeatherForecastRc.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
@@ -150,9 +148,7 @@ class HomeWeather : Fragment() {
                 mainContainer.visibility =View.VISIBLE
             }
             override fun onFailure(call: Call<CityWeatherForecast?>, t: Throwable) {
-                loader.visibility = View.GONE
-                mainContainer.visibility =View.VISIBLE
-                Log.i("FecthingForecastDataError", "Failed")
+                Toast.makeText(context, "Something went wrong, please try again!",Toast.LENGTH_LONG).show()
             }
         })
     }

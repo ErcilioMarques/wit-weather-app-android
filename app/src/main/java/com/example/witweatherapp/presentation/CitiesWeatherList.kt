@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.ProgressBar
+import android.widget.Toast
 import com.example.witweatherapp.BuildConfig.BASE_API_URL
 import com.example.witweatherapp.R
 import com.example.witweatherapp.models.CitiesWeather
@@ -77,18 +78,14 @@ class CitiesWeatherList : Fragment() {
     }
 
     private fun getCitiesWeatherData(context: Context) {
-
-
         val citiesIds = "2267057,3117735,2988507,2950159,2618425,3169070,2643743,2964574,3067696,2761369"
         val retrofitData = weatherApi().getCitiesWeatherData(citiesIds)
-
 
         retrofitData.enqueue(object : Callback<CitiesWeather?> {
             override fun onResponse(
                 call: Call<CitiesWeather?>,
                 response: Response<CitiesWeather?>,
             ) {
-                Log.i("FecthingDataSucess", response.body().toString())
                 val responseBody = response.body()!!
 
                 list.removeAll(list)
@@ -101,7 +98,7 @@ class CitiesWeatherList : Fragment() {
                 listView.adapter =  CitiesListViewAdapter(context,R.layout.city_weather_list_item,list)            }
 
             override fun onFailure(call: Call<CitiesWeather?>, t: Throwable) {
-                Log.i("FecthingDataFailure", "Failed")
+                Toast.makeText(context, "Something went wrong, please try again!",Toast.LENGTH_LONG).show()
             }
         })
     }

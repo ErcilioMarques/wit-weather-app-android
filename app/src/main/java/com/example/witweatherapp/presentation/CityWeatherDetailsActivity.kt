@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -113,7 +114,6 @@ class CityWeatherDetailsActivity : AppCompatActivity() {
                 call: Call<CityWeatherForecast?>,
                 response: Response<CityWeatherForecast?>,
             ) {
-                Log.i("FecthingForecastDataSucess", response.body().toString())
                 val responseBody = response.body()!!
                 weather_details_myCityWeatherForecast =responseBody
                 cityWeatherForecastRc.layoutManager = LinearLayoutManager(context,
@@ -126,7 +126,7 @@ class CityWeatherDetailsActivity : AppCompatActivity() {
             override fun onFailure(call: Call<CityWeatherForecast?>, t: Throwable) {
                 loader.visibility = View.GONE
                 mainContainer.visibility =View.VISIBLE
-                Log.i("FecthingForecastDataError", "Failed")
+                Toast.makeText(context, "Something went wrong, please try again!", Toast.LENGTH_LONG).show()
             }
         })
     }
