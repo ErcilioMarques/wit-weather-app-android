@@ -68,7 +68,9 @@ class CitiesWeatherList : Fragment() {
         listView.setOnItemClickListener{ parent: AdapterView<*>, view: View, position:Int, id:Long->
 
             val intent= Intent(activity, CityWeatherDetailsActivity::class.java)
-            intent.putExtra("title", list.get(position).name)
+            intent.putExtra("lat", list.get(position).coord.lat.toString())
+            intent.putExtra("lon", list.get(position).coord.lon.toString())
+
             startActivity(intent)
         }
     }
